@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseListAdapter;
+import com.firebase.ui.auth.core.AuthProviderType;
 import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
 import com.firebase.ui.auth.core.FirebaseLoginError;
 
@@ -66,6 +67,12 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     @Override
     protected void onFirebaseLoginUserError(FirebaseLoginError firebaseLoginError) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setEnabledAuthProvider(AuthProviderType.PASSWORD);
     }
 
     @Override
