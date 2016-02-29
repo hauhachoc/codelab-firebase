@@ -1,12 +1,14 @@
 package com.gdg.firebase.nanochat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseListAdapter;
 import com.firebase.ui.auth.core.AuthProviderType;
@@ -20,6 +22,8 @@ public class MainActivity extends FirebaseLoginBaseActivity {
 
     private Firebase mFirebaseRef;
     FirebaseListAdapter<ChatMessage> mListAdapter;
+
+    private String email = "Android User";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
             @Override
             public void onClick(View v) {
                 String text = textEdit.getText().toString();
-                ChatMessage message = new ChatMessage(mFirebaseRef.getAuth().getProviderData().get("email").toString(), text);
+                ChatMessage message = new ChatMessage(email, text);
                 mFirebaseRef.push().setValue(message);
                 textEdit.setText("");
             }
@@ -68,6 +72,21 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     @Override
     protected Firebase getFirebaseRef() {
         return mFirebaseRef;
+    }
+
+    @Override
+    protected void onFirebaseLoggedIn(AuthData authData) {
+        super.onFirebaseLoggedIn(authData);
+        if(BuildConfig.DEBUG) {
+            Log.d("Firebase", authData.getProviderData().get("email").toString());
+        }
+        email = authData.getProviderData().get("email").toString();
+    }
+
+    @Override
+    protected void onFirebaseLoggedOut() {
+        super.onFirebaseLoggedOut();
+        email = "Android User";
     }
 
     @Override
