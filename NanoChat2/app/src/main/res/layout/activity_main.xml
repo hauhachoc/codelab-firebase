@@ -25,6 +25,16 @@
         android:layout_alignRight="@android:id/list"
         android:layout_alignEnd="@android:id/list" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:id="@+id/logout"
+        android:layout_below="@id/login"
+        android:layout_alignRight="@id/login"
+        android:layout_alignEnd="@id/login"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/footer"
         android:layout_alignParentBottom="true"
