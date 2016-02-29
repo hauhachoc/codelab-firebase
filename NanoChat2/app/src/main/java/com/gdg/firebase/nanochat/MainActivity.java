@@ -11,6 +11,9 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseListAdapter;
 
+/**
+ * Step 5.1: Enable email-password login: on <a href="http://codelabg.firebaseio.com">your FireBase page</a>
+ * */
 public class MainActivity extends AppCompatActivity {
 
     private Firebase mFirebaseRef;
