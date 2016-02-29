@@ -55,7 +55,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
 
     @Override
     protected Firebase getFirebaseRef() {
-        return null;
+        return mFirebaseRef;
     }
 
     @Override
