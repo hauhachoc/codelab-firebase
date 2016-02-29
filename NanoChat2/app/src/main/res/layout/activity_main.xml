@@ -16,6 +16,15 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/footer"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/login"
+        android:layout_alignTop="@android:id/list"
+        android:layout_alignRight="@android:id/list"
+        android:layout_alignEnd="@android:id/list" />
+
     <LinearLayout
         android:id="@+id/footer"
         android:layout_alignParentBottom="true"
