@@ -11,9 +11,6 @@ import android.widget.TextView;
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseListAdapter;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class MainActivity extends AppCompatActivity {
 
     private Firebase mFirebaseRef;
@@ -34,10 +31,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = textEdit.getText().toString();
-                Map<String,Object> values = new HashMap<>();
-                values.put("name", "Android User");
-                values.put("text", text);
-                mFirebaseRef.push().setValue(values);
+                ChatMessage message = new ChatMessage("Android User", text);
+                mFirebaseRef.push().setValue(message);
                 textEdit.setText("");
             }
         });
