@@ -52,6 +52,17 @@ public class MainActivity extends FirebaseLoginBaseActivity {
             }
         };
         listView.setAdapter(mListAdapter);
+
+        // Step 5.6: call showFirebaseLoginPrompt while loginButton clicked.
+        // Go to https://codelabg.firebaseio.com -> Auth Tab -> Add User
+        Button loginButton = (Button) this.findViewById(R.id.login);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFirebaseLoginPrompt();
+            }
+        });
     }
 
     @Override
