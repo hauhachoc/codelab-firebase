@@ -90,10 +90,18 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     @Override
     protected void onFirebaseLoggedIn(AuthData authData) {
         super.onFirebaseLoggedIn(authData);
-        if(BuildConfig.DEBUG) {
-            Log.d("Firebase", authData.getProviderData().get("email").toString());
+        switch (authData.getProvider()){
+            case "facebook":
+                email = authData.getProviderData().get("displayName")+"";
+                break;
+            case "password":
+                if(BuildConfig.DEBUG) {
+                    Log.d("Firebase", authData.getProviderData().get("email") + "");
+                }
+                email = authData.getProviderData().get("email")+"";
+                break;
         }
-        email = authData.getProviderData().get("email").toString();
+
         loginButton.setVisibility(View.GONE);
         logoutButton.setVisibility(View.VISIBLE);
     }
@@ -120,6 +128,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
     protected void onStart() {
         super.onStart();
         setEnabledAuthProvider(AuthProviderType.PASSWORD);
+        setEnabledAuthProvider(AuthProviderType.FACEBOOK);
     }
 
     @Override
