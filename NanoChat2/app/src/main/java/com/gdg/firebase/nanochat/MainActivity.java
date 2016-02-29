@@ -36,7 +36,7 @@ public class MainActivity extends FirebaseLoginBaseActivity {
             @Override
             public void onClick(View v) {
                 String text = textEdit.getText().toString();
-                ChatMessage message = new ChatMessage("Android User", text);
+                ChatMessage message = new ChatMessage(mFirebaseRef.getAuth().getProviderData().get("email").toString(), text);
                 mFirebaseRef.push().setValue(message);
                 textEdit.setText("");
             }
