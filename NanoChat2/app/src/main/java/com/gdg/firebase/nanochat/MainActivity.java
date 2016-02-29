@@ -1,7 +1,6 @@
 package com.gdg.firebase.nanochat;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,11 +9,13 @@ import android.widget.TextView;
 
 import com.firebase.client.Firebase;
 import com.firebase.ui.FirebaseListAdapter;
+import com.firebase.ui.auth.core.FirebaseLoginBaseActivity;
+import com.firebase.ui.auth.core.FirebaseLoginError;
 
 /**
  * Step 5.1: Enable email-password login: on <a href="http://codelabg.firebaseio.com">your FireBase page</a>
  * */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FirebaseLoginBaseActivity {
 
     private Firebase mFirebaseRef;
     FirebaseListAdapter<ChatMessage> mListAdapter;
@@ -50,6 +51,21 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         listView.setAdapter(mListAdapter);
+    }
+
+    @Override
+    protected Firebase getFirebaseRef() {
+        return null;
+    }
+
+    @Override
+    protected void onFirebaseLoginProviderError(FirebaseLoginError firebaseLoginError) {
+
+    }
+
+    @Override
+    protected void onFirebaseLoginUserError(FirebaseLoginError firebaseLoginError) {
+
     }
 
     @Override
