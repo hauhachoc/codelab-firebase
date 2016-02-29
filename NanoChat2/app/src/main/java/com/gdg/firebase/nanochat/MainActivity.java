@@ -48,4 +48,10 @@ public class MainActivity extends AppCompatActivity {
         };
         listView.setAdapter(mListAdapter);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mListAdapter.cleanup();
+    }
 }
