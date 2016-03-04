@@ -1,71 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>NanoChat</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!--[if IE]>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <![endif]-->
+    <title>Google Developer Group 2016</title>
     <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
-    <link rel="stylesheet" type="text/css" href="resources/tutorial/css/example.css">
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+
 </head>
-<body>
-<!-- CHAT MARKUP -->
-<div class="example-chat l-demo-container">
-    <header>Firebase Chat Demo</header>
+<body style="font-family:Verdana">
+<div class="container">
+    <div class="row " style="padding-top:40px;">
+        <h3 class="text-center">Google Developer Group 2016</h3>
+        <br/>
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    Chat trực tuyến - Đặt câu hỏi - Thảo luận
+                    <h5> <input id='nameInput' type="text" class="form-control" placeholder="Nhập tên bạn" value="Google User"/></h5>
+                </div>
+                <div class="panel-body">
+                    <ul class="media-list" id='example-messages'>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="messageInput" type="text" class="form-control" placeholder="Nội dung"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-info" type="button" onclick="sendMessage()">GỬI</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class='example-chat-toolbar'>
-        <label for="nameInput">Username:</label>
-        <input type='text' id='nameInput' placeholder='enter a username...'>
     </div>
-
-    <ul id='example-messages' class="example-chat-messages"></ul>
-
-    <footer>
-        <input type='text' id='messageInput' placeholder='Type a message...'>
-    </footer>
 </div>
 
-<!-- CHAT JAVACRIPT -->
-<script>
-    // CREATE A REFERENCE TO FIREBASE
-    var messagesRef = new Firebase('https://codelabg.firebaseio.com/');
-
-    // REGISTER DOM ELEMENTS
-    var messageField = $('#messageInput');
-    var nameField = $('#nameInput');
-    var messageList = $('#example-messages');
-
-    // LISTEN FOR KEYPRESS EVENT
-    messageField.keypress(function (e) {
-        if (e.keyCode == 13) {
-            //FIELD VALUES
-            var username = nameField.val();
-            var message = messageField.val();
-
-            //SAVE DATA TO FIREBASE AND EMPTY FIELD
-            messagesRef.push({name: username, text: message});
-            messageField.val('');
-        }
-    });
-
-    // Add a callback that is triggered for each chat message.
-    messagesRef.limitToLast(10).on('child_added', function (snapshot) {
-        //GET DATA
-        var data = snapshot.val();
-        var username = data.name || "anonymous";
-        var message = data.text;
-
-        //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
-        var messageElement = $("<li>");
-        var nameElement = $("<strong class='example-chat-username'></strong>")
-        nameElement.text(username);
-        messageElement.text(message).prepend(nameElement);
-
-        //ADD MESSAGE
-        messageList.append(messageElement)
-
-        //SCROLL TO BOTTOM OF MESSAGE LIST
-        messageList[0].scrollTop = messageList[0].scrollHeight;
-    });
-</script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>
