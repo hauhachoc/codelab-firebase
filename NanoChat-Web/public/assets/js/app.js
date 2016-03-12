@@ -18,18 +18,10 @@ var sendMessage = function(){
     var username = nameField.val();
     var message = messageField.val();
 
-    var currentTime = new Date();
-    var hours = currentTime.getHours();
-    var minutes = currentTime.getMinutes();
-    if (minutes < 10){
-        minutes = "0" + minutes;
-    }
-
     //SAVE DATA TO FIREBASE AND EMPTY FIELD
     messagesRef.push({
         name: username,
-        text: message,
-        time: " | "+hours+":"+minutes
+        text: message
     });
     messageField.val('');
 };
@@ -40,12 +32,11 @@ messagesRef.limitToLast(20).on('child_added', function (snapshot) {
     var data = snapshot.val();
     var username = data.name || "anonymous";
     var message = data.text;
-    var time = data.time || "";
     var avatar = "assets/img/avatar.png";
 
     //CREATE ELEMENTS MESSAGE & SANITIZE TEXT
-    var template = "<li class=\"media\"><div class=\"media-body\"><div class=\"media\"><a class=\"pull-left\" href=\"#\"><img class=\"media-object img-circle \" src=\"{avatar}\"/></a><div class=\"media-body\">{message}<br/><small class=\"text-muted\">{user}  {time}</small><hr/></div></div></div></li>";
-    template = template.replace("{message}",message).replace("{user}",username).replace("{avatar}",avatar).replace("{time}",time);
+    var template = "<li class=\"media\"><div class=\"media-body\"><div class=\"media\"><a class=\"pull-left\" href=\"#\"><img class=\"media-object img-circle \" src=\"{avatar}\"/></a><div class=\"media-body\">{message}<br/><small class=\"text-muted\">{user}</small><hr/></div></div></div></li>";
+    template = template.replace("{message}",message).replace("{user}",username).replace("{avatar}",avatar);
     var messageElement = $(template);
 
     //ADD MESSAGE
