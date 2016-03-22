@@ -1,49 +1,78 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <!--[if IE]>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <![endif]-->
-    <title>Google Developer Group 2016</title>
+    <meta charset="UTF-8">
+    <title>NanoChat</title>
     <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
-    <!-- BOOTSTRAP CORE STYLE CSS -->
-    <link href="assets/css/bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="resources/tutorial/css/example.css">
 
+    <script>
+        // CREATE A REFERENCE TO FIREBASE
+        var ardxRef = new Firebase('https://codelab2.firebaseio.com/ardx/');
+
+        var lightOn = '<img src="https://maxcdn.icons8.com/Color/PNG/24/Household/light_on-24.png" title="Light On" width="24">';
+        var lightOff = '<img src="https://maxcdn.icons8.com/Color/PNG/24/Household/light_off-24.png" title="Light Off" width="24">';
+        var lightToggle = '<img src="https://maxcdn.icons8.com/Color/PNG/24/Household/candle_bulb-24.png" title="Candle Bulb" width="24">';
+    </script>
 </head>
-<body style="font-family:Verdana">
-<div class="container">
-    <div class="row " style="padding-top:40px;">
-        <h3 class="text-center">Google Developer Group 2016</h3>
-        <br/>
-        <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    Chat trực tuyến - Đặt câu hỏi - Thảo luận
-                    <h5> <input id='nameInput' type="text" class="form-control" placeholder="Nhập tên bạn" value="Google User"/></h5>
-                </div>
-                <div class="panel-body">
-                    <ul class="media-list" id='example-messages'>
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="messageInput" type="text" class="form-control" placeholder="Nội dung"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-info" type="button" onclick="sendMessage()">GỬI</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+<body>
+<!-- CHAT MARKUP -->
+<div>
+    Trạng thái đèn:
+    <li>
+        Đèn 1: <span id="light_state_1">Đang xác định...</span>
+        <input id="cb_led_1" type="checkbox" onclick="toggleLed(this,'led1');">
+    </li>
+    <li>
+        Đèn 2: <span id="light_state_2">Đang xác định...</span>
+        <input id="cb_led_2" type="checkbox" onclick="toggleLed(this,'led2');">
+    </li>
+    <li>
+        Đèn 3: <span id="light_state_3">Đang xác định...</span>
+        <input id="cb_led_3" type="checkbox" onclick="toggleLed(this,'led3');">
+    </li>
 </div>
 
-<script src="assets/js/app.js"></script>
+<!-- CHAT JAVACRIPT -->
+<script>
+
+    // check box change event
+    var toggleLed = function(checkboz, led){
+        switch (led){
+            case 'led1':
+                ardxRef.update({'led1':checkboz.checked?1:0});
+                break;
+            case 'led2':
+                ardxRef.update({'led2':checkboz.checked?1:0});
+                break;
+            case 'led3':
+                ardxRef.update({'led3':checkboz.checked?1:0});
+                break;
+        }
+    };
+
+    // firebase data change event
+    ardxRef.on('value', function(snapshot){
+        var value = snapshot.val(); // is on or off
+
+        var msgElem1 = document.getElementById("light_state_1");
+        var msgElem2 = document.getElementById("light_state_2");
+        var msgElem3 = document.getElementById("light_state_3");
+
+        var cbLed1 = document.getElementById('cb_led_1');
+        var cbLed2 = document.getElementById('cb_led_2');
+        var cbLed3 = document.getElementById('cb_led_3');
+
+        cbLed1.checked = value.led1 != 0;
+        cbLed2.checked = value.led2 != 0;
+        cbLed3.checked = value.led3 != 0;
+
+        msgElem1.innerHTML = value.led1 == 0 ? lightOff : lightOn;
+        msgElem2.innerHTML = value.led2 == 0 ? lightOff : lightOn;
+        msgElem3.innerHTML = value.led3 == 0 ? lightOff : lightOn;
+    });
+
+</script>
 </body>
 </html>
